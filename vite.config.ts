@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import mdx from '@mdx-js/rollup';
 import remarkFrontmatter from 'remark-frontmatter';
@@ -19,7 +19,7 @@ export default defineConfig({
         [remarkMdxFrontmatter, { name: 'frontmatter' }],
       ],
       providerImportSource: '@mdx-js/react',
-    }),
+    }) as Plugin,
     react(),
     // Compression: Gzip and Brotli (default)
     compression({
@@ -92,7 +92,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler',
+        // Note: 'api: modern-compiler' is now default in Vite 7.0+ (option removed)
         quietDeps: true, // Suppress deprecation warnings from dependencies (e.g., Carbon Design System)
         additionalData: `
           @use 'sass:map';
