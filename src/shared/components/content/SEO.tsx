@@ -97,7 +97,9 @@ const SEO: React.FC<SEOProps> = ({
 
   // Generate computed values with locale
   const fullTitle = generateTitle(title, locale);
-  const fullUrl = canonical || generateUrl(path, locale);
+  // Auto-detect current path if not provided (for canonical URL)
+  const currentPath = path || (typeof window !== 'undefined' ? window.location.pathname : undefined);
+  const fullUrl = canonical || generateUrl(currentPath, locale);
   const fullImage = generateImageUrl(image, locale);
 
   // Update SEO context whenever metadata changes (including locale)
