@@ -1,5 +1,8 @@
 # ARTEK Homepage
 
+Test PR auto-reject
+
+
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL%203.0-blue.svg)](LICENSE)
 [![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)](https://www.typescriptlang.org/)
