@@ -1,21 +1,22 @@
 {
-	"name": "artek-dashboard",
-	"description": "ARTEK AI Worker Dashboard - Streamlit project on Cloudflare Containers",
-	"private": true,
-	"dependencies": {
-		"@cloudflare/containers": "0.0.30",
-		"hono": "4.11.1",
-		"jose": "^5.9.6"
-	},
-	"devDependencies": {
-		"@types/node": "^25.0.3",
-		"typescript": "5.9.3",
-		"wrangler": "^4.56.0"
-	},
-	"scripts": {
-		"cf-typegen": "wrangler types",
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev"
-	}
+  "name": "artek-dashboard",
+  "description": "ARTEK AI Worker Dashboard - Streamlit project on Cloudflare Containers",
+  "private": true,
+  "dependencies": {
+    "@cloudflare/containers": "0.0.30",
+    "dotenv-cli": "^11.0.0",
+    "hono": "^4.11.7",
+    "jose": "^5.9.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "typescript": "5.9.3",
+    "wrangler": "^4.56.0"
+  },
+  "scripts": {
+    "cf-typegen": "dotenv -- wrangler types",
+    "deploy": "dotenv -- wrangler deploy",
+    "dev": "dotenv -- wrangler dev",
+    "start": "dotenv -- wrangler dev"
+  }
 }
