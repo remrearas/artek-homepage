@@ -48,11 +48,6 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Install OpenSSL
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y openssl
-
       - name: Generate Development Certificate
         run: node scripts/generate_development_certificate.js
 
