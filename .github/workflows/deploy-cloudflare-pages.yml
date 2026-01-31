@@ -80,29 +80,6 @@ jobs:
         if: success()
         run: npm run render4ai
 
-      - name: Install rclone
-        if: success()
-        run: |
-          curl https://rclone.org/install.sh | sudo bash
-
-      - name: Configure rclone for R2
-        if: success()
-        env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
-          CLOUDFLARE_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
-        run: |
-          mkdir -p ~/.config/rclone
-          cat > ~/.config/rclone/rclone.conf << EOF
-          [r2]
-          type = s3
-          provider = Cloudflare
-          access_key_id = ${CLOUDFLARE_ACCESS_KEY_ID}
-          secret_access_key = ${CLOUDFLARE_SECRET_ACCESS_KEY}
-          endpoint = https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com
-          acl = private
-          EOF
-
       - name: Upload knowledgebase to R2
         if: success()
         run: |
