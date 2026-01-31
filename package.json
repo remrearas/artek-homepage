@@ -42,7 +42,7 @@
     "@vis.gl/react-google-maps": "^1.7.0",
     "glob": "^13.0.0",
     "gray-matter": "^4.0.3",
-    "mermaid": "^11.12.1",
+    "mermaid": "^10.9.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-helmet-async": "^2.0.5",
