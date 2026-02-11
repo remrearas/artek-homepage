@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// noinspection DuplicatedCode
+// noinspection DuplicatedCode,HttpUrlsUsage
 
 /**
  *  █████╗ ██████╗  █████╗ ███████╗
@@ -67,6 +67,7 @@ const log = {
  * @property {string[]} locales
  * @property {string[]} themes
  * @property {string[]} routes
+ * @property {string[]} [exclude_from_sitemap] - Routes to exclude from sitemap.xml
  * @property {Object} playwright - Playwright settings
  * @property {boolean} playwright.headless - Headless mode
  * @property {number} playwright.concurrency - Parallel page renders
@@ -341,6 +342,83 @@ async function prerenderAll(config) {
 }
 
 /**
+ * Calculate priority based on route depth
+ * @param {string} route
+ * @returns {string}
+ */
+function calculatePriority(route) {
+  if (route === '/') return '1.0';
+  const depth = route.split('/').filter(Boolean).length;
+  if (depth === 1) return '0.8';
+  if (depth === 2) return '0.6';
+  return '0.4';
+}
+
+/**
+ * Calculate change frequency based on route depth
+ * @param {string} route
+ * @returns {string}
+ */
+function calculateChangeFreq(route) {
+  if (route === '/') return 'weekly';
+  const depth = route.split('/').filter(Boolean).length;
+  if (depth <= 2) return 'monthly';
+  return 'yearly';
+}
+
+/**
+ * Generate sitemap.xml from routes and config
+ * @param {Config} config
+ */
+function generateSitemap(config) {
+  const today = new Date().toISOString().split('T')[0];
+  const productionUrl = config.production_url.replace(/\/$/, '');
+  const excluded = config.exclude_from_sitemap || [];
+
+  const urls = config.routes.filter((route) => !excluded.includes(route)).map((route) => {
+    const loc = route === '/' ? productionUrl + '/' : `${productionUrl}${route}`;
+    return [
+      '  <url>',
+      `    <loc>${loc}</loc>`,
+      `    <lastmod>${today}</lastmod>`,
+      `    <changefreq>${calculateChangeFreq(route)}</changefreq>`,
+      `    <priority>${calculatePriority(route)}</priority>`,
+      '  </url>',
+    ].join('\n');
+  });
+
+  const sitemap = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...urls,
+    '</urlset>',
+    '',
+  ].join('\n');
+
+  writeFileSync(join(DIST_DIR, 'sitemap.xml'), sitemap, 'utf-8');
+  log.info(`Sitemap generated (${config.routes.length} URLs)`);
+}
+
+/**
+ * Generate robots.txt with sitemap reference
+ * @param {Config} config
+ */
+function generateRobotsTxt(config) {
+  const productionUrl = config.production_url.replace(/\/$/, '');
+
+  const robotsTxt = [
+    'User-agent: *',
+    'Allow: /',
+    '',
+    `Sitemap: ${productionUrl}/sitemap.xml`,
+    '',
+  ].join('\n');
+
+  writeFileSync(join(DIST_DIR, 'robots.txt'), robotsTxt, 'utf-8');
+  log.info('robots.txt generated');
+}
+
+/**
  * Main execution
  */
 async function main() {
@@ -376,6 +454,14 @@ async function main() {
       );
     } catch (error) {
       log.warning(`Failed to build _worker.js: ${error.message}`);
+    }
+
+    // Generate sitemap.xml and robots.txt
+    try {
+      generateSitemap(config);
+      generateRobotsTxt(config);
+    } catch (error) {
+      log.warning(`Failed to generate sitemap/robots.txt: ${error.message}`);
     }
 
     // Start preview server

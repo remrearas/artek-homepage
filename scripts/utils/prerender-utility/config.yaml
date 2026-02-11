@@ -9,6 +9,10 @@ themes:
   - white
   - g90
 
+# Sitemap Settings
+exclude_from_sitemap:
+  - /under-construction
+
 # Playwright Settings
 playwright:
   # Headless mode
