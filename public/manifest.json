@@ -1,0 +1,29 @@
+{
+  "name": "ARTEK - İnovasyon & Ar-Ge",
+  "short_name": "ARTEK",
+  "description": "Araştırma ve Geliştirme faaliyetlerinizde danışmanlık, proje yönetimi ve inovasyon stratejisi geliştirme.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#414042",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/icons/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/android-chrome-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/android-chrome-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
