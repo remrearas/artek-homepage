@@ -1,0 +1,14 @@
+{
+  "name": "artek-asset-generator",
+  "version": "1.0.0",
+  "description": "ARTEK Asset Generator - Favicon, icons and logo generation",
+  "main": "generate-assets.js",
+  "scripts": {
+    "generate": "node generate-assets.js",
+    "clean": "rm -rf output/*"
+  },
+  "dependencies": {
+    "sharp": "^0.33.0",
+    "png-to-ico": "^2.1.8"
+  }
+}
