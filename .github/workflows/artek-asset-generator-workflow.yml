@@ -98,7 +98,7 @@ jobs:
         with:
           name: artek-assets-${{ env.SESSION_ID }}
           path: scripts/utils/artek-asset-generator/output
-          retention-days: 90
+          retention-days: 30
 
       - name: Set Exit Code
         if: always()
